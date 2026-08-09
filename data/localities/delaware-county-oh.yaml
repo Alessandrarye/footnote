@@ -1,0 +1,35 @@
+# Locality package: Delaware County, Ohio (area)
+# Schema note: every entry carries source_url, verified (date), and tier.
+# Tiers: primary (official record) > official-communication > reputable-secondary.
+# Nothing below reputable-secondary enters the civic layer. Staleness is
+# displayed to users, never hidden.
+
+locality:
+  id: delaware-county-oh
+  name: "Delaware County, Ohio"
+  state: OH
+
+officials:
+  # SAMPLE ENTRY — replace with real data during build-week 3
+  - name: "PLACEHOLDER Jane Example"
+    role: "County Commissioner"
+    contact: "commissioners@example.gov"
+    source_url: "https://example.gov/commissioners"
+    verified: 2026-08-09
+    tier: primary
+
+meetings:
+  - body: "PLACEHOLDER Board of Commissioners"
+    schedule: "Mondays and Thursdays, 9:00 AM"
+    agenda_portal: "https://example.gov/agendas"
+    source_url: "https://example.gov/meetings"
+    verified: 2026-08-09
+    tier: primary
+
+organizations:
+  - name: "PLACEHOLDER League of Women Voters of Delaware County"
+    focus: "Voter education, local government observation"
+    url: "https://example.org"
+    source_url: "https://example.org/about"
+    verified: 2026-08-09
+    tier: reputable-secondary
