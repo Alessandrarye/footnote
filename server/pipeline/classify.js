@@ -1,26 +1,55 @@
 // Stage 1: classify the claim.
-// Skeleton: hardcoded classification. Week 2 swaps the body for the AI adapter;
-// the function signature and transparency contract stay exactly the same.
+// Real model classification through the adapter when a key is configured;
+// an honest, clearly-labeled fallback when it isn't or when the call fails.
+// Either way, the transparency record says exactly what happened.
 
-function classify(claim, ctx) {
-  const classification = {
-    kind: "factual",            // factual | opinion | mixed
-    checkable: true,
-    subject: "public spending",
-    summary: "A checkable claim about how levy funds are being allocated.",
-    embeddedFactualClaim: null, // used when kind === "mixed"
-  };
+const { hasModel, classifyWithModel } = require("./adapter");
+
+const FALLBACK = {
+  kind: "factual",
+  checkable: true,
+  subject: null,
+  summary:
+    "Model unavailable; treated as a checkable claim by default so the records can still be examined.",
+  embeddedFactualClaim: null,
+};
+
+async function classify(claim, ctx) {
+  if (hasModel()) {
+    try {
+      const { classification, meta } = await classifyWithModel(claim);
+      ctx.transparency.push({
+        stage: "classify",
+        at: new Date().toISOString(),
+        method: `model (${meta.model})`,
+        aiInvolved: true,
+        latencyMs: meta.latencyMs,
+        note: `Model classified this as ${classification.kind} (checkable: ${classification.checkable}).`,
+        output: classification,
+      });
+      return classification;
+    } catch (err) {
+      ctx.transparency.push({
+        stage: "classify",
+        at: new Date().toISOString(),
+        method: "fallback (model call failed)",
+        aiInvolved: false,
+        note: `Model call failed (${err.message.slice(0, 120)}); used default classification.`,
+        output: FALLBACK,
+      });
+      return FALLBACK;
+    }
+  }
 
   ctx.transparency.push({
     stage: "classify",
     at: new Date().toISOString(),
-    method: "hardcoded (skeleton)",
+    method: "fallback (no model configured)",
     aiInvolved: false,
-    note: "Classified as a checkable claim about public spending.",
-    output: classification,
+    note: "No model configured; used default classification.",
+    output: FALLBACK,
   });
-
-  return classification;
+  return FALLBACK;
 }
 
 module.exports = { classify };
