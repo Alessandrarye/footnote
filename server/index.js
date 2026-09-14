@@ -1,3 +1,5 @@
+require("dotenv").config({ path: require("path").join(__dirname, ".env") });
+
 const express = require("express");
 const cors = require("cors");
 const { runClaim } = require("./pipeline");
@@ -15,7 +17,7 @@ app.get("/api/localities", (req, res) => {
   res.json({ localities: listLocalities() });
 });
 
-app.post("/api/claims", (req, res) => {
+app.post("/api/claims", async (req, res) => {
   const { claim, localityId, policy } = req.body || {};
   if (!claim || typeof claim !== "string" || !claim.trim()) {
     return res.status(400).json({ error: "claim is required" });
@@ -23,8 +25,13 @@ app.post("/api/claims", (req, res) => {
   if (!localityId) {
     return res.status(400).json({ error: "localityId is required" });
   }
-  const result = runClaim({ claim: claim.trim(), localityId, policy });
-  res.json(result);
+  try {
+    const result = await runClaim({ claim: claim.trim(), localityId, policy });
+    res.json(result);
+  } catch (err) {
+    console.error("claims pipeline error:", err);
+    res.status(500).json({ error: "Something went wrong processing the claim." });
+  }
 });
 
 const PORT = process.env.PORT || 3001;
