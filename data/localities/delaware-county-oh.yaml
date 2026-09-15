@@ -11,25 +11,263 @@ locality:
 
 officials:
   # SAMPLE ENTRY — replace with real data during build-week 3
-  - name: "PLACEHOLDER Jane Example"
-    role: "County Commissioner"
-    contact: "commissioners@example.gov"
-    source_url: "https://example.gov/commissioners"
-    verified: 2026-08-09
+  - name: "Elaine McCloskey"
+    role: "Clerk of Council"
+    jurisdiction: "City of Powell"
+    contact: "emccloskey@cityofpowell.us"
+    source_url: "https://www.cityofpowell.us/Government/City-Clerk"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "Heather Karr"
+    role: "Mayor"
+    jurisdiction: "City of Powell"
+    contact: "karr@cityofpowell.us"
+    source_url: "https://www.cityofpowell.us/Government/City-Council/Mayor-Heather-Karr"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "Tom Counts"
+    role: "Vice Mayor"
+    jurisdiction: "City of Powell"
+    contact: "counts@cityofpowell.us"
+    source_url: "https://www.cityofpowell.us/Government/City-Council/Vice-Mayor-Tom-Counts"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "Leif Carlson"
+    role: "Councilman"
+    jurisdiction: "City of Powell"
+    contact: "carlson@cityofpowell.us"
+    source_url: "https://www.cityofpowell.us/Government/City-Council/Councilman-Leif-Carlson"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "Carlos Crawford"
+    role: "Councilman"
+    jurisdiction: "City of Powell"
+    contact: "crawford@cityofpowell.us"
+    source_url: "https://www.cityofpowell.us/Government/City-Council/Councilman-Carlos-Crawford"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "Tyler Herrmann"
+    role: "Councilman"
+    jurisdiction: "City of Powell"
+    contact: "herrmann@cityofpowell.us"
+    source_url: "https://www.cityofpowell.us/Government/City-Council/Councilman-Tyler-Herrmann"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "David Lester"
+    role: "Councilman"
+    jurisdiction: "City of Powell"
+    contact: "lester@cityofpowell.us"
+    source_url: "https://www.cityofpowell.us/Government/City-Council/Councilman-David-Lester"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "Kurt Ramsey"
+    role: "Councilman"
+    jurisdiction: "City of Powell"
+    contact: "ramsey@cityofpowell.us"
+    source_url: "https://www.cityofpowell.us/Government/City-Council/Councilman-Kurt-Ramsey"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: Brandon Lester
+    role: Board President, Olentangy Local School District Board of Education
+    email: brandon_lester@olsd.us
+    phone: (740) 657-4094
+    term_expires: 2029-12-31
+    source_url: https://www.olentangy.k12.oh.us/board-of-education/about-the-board
+    verified: 2026-09-15
+    tier: primary
+
+  - name: Libby Wallick
+    role: Board Vice President, Olentangy Local School District Board of Education
+    email: elizabeth_wallick@olsd.us
+    phone: (740) 657-4092
+    term_expires: 2027-12-31
+    source_url: https://www.olentangy.k12.oh.us/board-of-education/about-the-board
+    verified: 2026-09-15
+    tier: primary
+
+  - name: Kevin Daberkow
+    role: Board Member, Olentangy Local School District Board of Education
+    email: kevin_daberkow@olsd.us
+    phone: (740) 657-4091
+    term_expires: 2029-12-31
+    source_url: https://www.olentangy.k12.oh.us/board-of-education/about-the-board
+    verified: 2026-09-15
+    tier: primary
+
+  - name: Brad Rellinger
+    role: Board Member, Olentangy Local School District Board of Education
+    email: brad_rellinger@olsd.us
+    phone: (740) 657-4090
+    term_expires: 2027-12-31
+    source_url: https://www.olentangy.k12.oh.us/board-of-education/about-the-board
+    verified: 2026-09-15
+    tier: primary
+
+  - name: Lizett Schreiber
+    role: Board Member, Olentangy Local School District Board of Education
+    email: lizett_schreiber@olsd.us
+    phone: (740) 657-4093
+    term_expires: 2027-12-31
+    source_url: https://www.olentangy.k12.oh.us/board-of-education/about-the-board
+    verified: 2026-09-15
+    tier: primary
+
+  - name: Jeff Benton
+    role: Commissioner, Delaware County Board of Commissioners
+    phone: "(740) 833-2103"
+    term_expires: 2029-01-02
+    source_url: "https://co.delaware.oh.us/commissioners/"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: Barb Lewis
+    role: Commissioner, Delaware County Board of Commissioners
+    phone: "(740) 833-2101"
+    term_expires: 2026-12-31
+    source_url: "https://co.delaware.oh.us/commissioners/"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: Gary Merrell
+    role: Commissioner, Delaware County Board of Commissioners
+    phone: "(740) 833-2102"
+    term_expires: 2029-01-01
+    source_url: "https://co.delaware.oh.us/commissioners/"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: George Kaitsa
+    role: Auditor, Delaware County
+    email: gkaitsa@co.delaware.oh.us
+    phone: "740-833-2900"
+    term_expires: 2027-03-07
+    source_url: "https://co.delaware.oh.us/wp-content/uploads/2025/12/2026-Directory.pdf"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: Delaware County Board of Elections
+    role: County elections office
+    location: Willis Building, 2079 U.S. Highway 23N, Delaware, OH 43015
+    phone: "740-833-2080"
+    website: "https://vote.delawarecountyohio.gov"
+    source_url: "https://co.delaware.oh.us/wp-content/uploads/2025/12/2026-Directory.pdf"
+    verified: 2026-09-15
     tier: primary
 
 meetings:
-  - body: "PLACEHOLDER Board of Commissioners"
-    schedule: "Mondays and Thursdays, 9:00 AM"
-    agenda_portal: "https://example.gov/agendas"
-    source_url: "https://example.gov/meetings"
-    verified: 2026-08-09
+  - body: "Powell City Council"
+    schedule: "First and third Tuesdays, 7:30 p.m., at the Village Green, 47 Hall Street"
+    jurisdiction: "City of Powell"
+    source_url: "https://www.cityofpowell.us/Government/City-Council"
+    verified: 2026-09-15
+    tier: primary
+
+  - body: "Powell City Planning and Zoning Commission"
+    schedule: "Second and fourth Wednesdays, 7:00 p.m., at the Village Green, 47 Hall Street"
+    jurisdiction: "City of Powell"
+    source_url: "https://www.cityofpowell.us/Government/City-Council"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: Olentangy Board of Education Regular Meeting
+    body: Olentangy Local School District Board of Education
+    schedule: Typically two Thursdays per month, 6:30 p.m.; dates and locations change by board vote, check the meeting dates page
+    location: Olentangy Administrative Office, Berlin Conference Room, 7840 Graphics Way, Lewis Center, OH 43035 (some sessions held at district high schools)
+    public_welcome: true
+    agenda_portal: https://www.olentangy.k12.oh.us/board-of-education/board-meetings/board-meeting-records
+    source_url: https://www.olentangy.k12.oh.us/board-of-education/board-meetings/meeting-dates
+    verified: 2026-09-15
+    tier: primary
+
+  - name: Delaware County Commissioners Session
+    body: Delaware County Board of Commissioners
+    schedule: Mondays and Thursdays, 9:30 a.m.; individual sessions may be canceled or relocated, check the session calendar
+    location: Commissioners Hearing Room, 91 N. Sandusky St., Delaware, OH 43015
+    public_welcome: true
+    agenda_portal: "https://co.delaware.oh.us/commissioners/"
+    source_url: "https://co.delaware.oh.us/commissioners/"
+    verified: 2026-09-15
     tier: primary
 
 organizations:
-  - name: "PLACEHOLDER League of Women Voters of Delaware County"
-    focus: "Voter education, local government observation"
-    url: "https://example.org"
-    source_url: "https://example.org/about"
-    verified: 2026-08-09
+  - name: "League of Women Voters of Delaware County"
+    focus: "Voter education, candidate forums, local government observation"
+    url: "https://www.lwv.org/local-leagues/lwv-delaware-county"
+    source_url: "https://www.lwv.org/local-leagues/lwv-delaware-county"
+    verified: 2026-09-15
     tier: reputable-secondary
+
+  - name: "Delaware County District Library"
+    focus: "Public library system with branches across Delaware County; programs, meeting rooms, and local government information"
+    url: "https://www.delawarelibrary.org/"
+    source_url: "https://www.delawarelibrary.org/"
+    verified: 2026-09-15
+    tier: reputable-secondary
+
+  - name: "The Delaware Gazette"
+    focus: "Local newspaper covering Delaware County government, schools, and community news"
+    url: "https://www.delgazette.com/"
+    source_url: "https://www.delgazette.com/"
+    verified: 2026-09-15
+    tier: reputable-secondary
+
+  - name: "Delaware County Historical Society"
+    focus: "Local history preservation, museums, and educational programs in Delaware County"
+    url: "https://www.delawareohiohistory.org/"
+    source_url: "https://www.delawareohiohistory.org/"
+    verified: 2026-09-15
+    tier: reputable-secondary
+
+resources:
+  - name: "Public Records Request (City of Powell)"
+    url: "https://cityofpowelloh.nextrequest.com/"
+    jurisdiction: "City of Powell"
+    source_url: "https://www.cityofpowell.us/Government/City-Clerk"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "Ohio Revised Code: Public Records"
+    url: "https://codes.ohio.gov/ohio-revised-code/section-149.43"
+    jurisdiction: "State of Ohio"
+    source_url: "https://www.cityofpowell.us/Government/City-Clerk"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "Legal Public Notices (City of Powell)"
+    url: "https://www.cityofpowell.us/Government/City-Council/Legal-Public-Notices"
+    jurisdiction: "City of Powell"
+    source_url: "https://www.cityofpowell.us/Government/City-Council"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "Olentangy Schools meeting videos (YouTube)"
+    description: "Official district YouTube channel with recorded board meetings"
+    url: "https://www.youtube.com/@OlentangySchools/videos"
+    jurisdiction: "Olentangy Local School District"
+    source_url: "https://www.olentangy.k12.oh.us/board-of-education/board-meetings/board-meeting-records"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "Delaware County Board and Commission Appointments"
+    description: "How residents can be appointed to county boards and commissions; includes the current list of boards and appointment opportunities"
+    url: "https://co.delaware.oh.us/commissioners/boardappointments/"
+    jurisdiction: "Delaware County"
+    source_url: "https://co.delaware.oh.us/commissioners/boardappointments/"
+    verified: 2026-09-15
+    tier: primary
+
+  - name: "Delaware County Elected Officials Directory"
+    description: "Directory of all elected officials serving Delaware County"
+    url: "https://co.delaware.oh.us/eodirectory/"
+    jurisdiction: "Delaware County"
+    source_url: "https://co.delaware.oh.us/eodirectory/"
+    verified: 2026-09-15
+    tier: primary

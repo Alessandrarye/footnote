@@ -30,3 +30,11 @@ mechanics. See README. These are design decisions, not missing features.
 Blast-radius isolation for a judged demo; clean documented infra from
 scratch; accepted ~$10/mo. Elastic IP + footnote.alessandrarye.com,
 nginx + pm2 + certbot. Runbook: docs/deploy.md.
+
+## 2026-09-15 · Delaware County data capture v1
+
+- OLSD board members cite the combined about-the-board page as source_url; the district has no individual bio pages (unlike Powell).
+- Citation rule for downloadable files: rolling "current" documents (agendas, session calendars) cite the stable parent page; dated documents (2026 Directory) cite their own permanent URL.
+- v1 county coverage is commissioners + auditor + Board of Elections by design; judges, sheriff, and other county officials deferred (eodirectory resource entry covers them for users).
+- Offices without a single named official (Board of Elections) live under officials with the office name in the name field; organizations is reserved for non-government reputable-secondary entries.
+- OLSD YouTube channel captured as a resource, not in agenda_portal; recordings answer a different question than agendas.
