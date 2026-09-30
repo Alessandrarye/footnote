@@ -38,3 +38,8 @@ nginx + pm2 + certbot. Runbook: docs/deploy.md.
 - v1 county coverage is commissioners + auditor + Board of Elections by design; judges, sheriff, and other county officials deferred (eodirectory resource entry covers them for users).
 - Offices without a single named official (Board of Elections) live under officials with the office name in the name field; organizations is reserved for non-government reputable-secondary entries.
 - OLSD YouTube channel captured as a resource, not in agenda_portal; recordings answer a different question than agendas.
+
+## 2026-09-29 · Claim-flow diagram
+
+Added the claim-flow diagram (panel feedback item 1). README and slide
+versions live in docs/img/, drawn in the deck's ink-and-cherry style.
