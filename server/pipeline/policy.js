@@ -17,10 +17,10 @@ function applyPolicy(claim, sources, policy, ctx) {
   const sourceCard = {
     policy,
     claim,
-    // Skeleton: hardcoded plain-language summary. Week 2: model-drafted,
+    // Curated: hardcoded plain-language summary. Week 2: model-drafted,
     // then checked so every sentence maps to a kept source.
     summary:
-      "PLACEHOLDER SUMMARY. The real card will state, in plain language, what the primary records show about how levy proceeds are allocated, without a verdict badge.",
+      "The March 2024 ballot authorized Olentangy Local School District to levy taxes for stated purposes, including current operating expenses and permanent improvements. The district's audited FY2025 Annual Comprehensive Financial Report states actual expenditures by function. Board of Education meeting minutes record the board's votes on district finances, including approval of the financial forecast. The records describe permitted purposes and reported spending; no verdict is offered.",
     sources: kept,
     verdictBadge: null, // by design, always null
   };
