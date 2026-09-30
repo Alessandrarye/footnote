@@ -43,3 +43,26 @@ nginx + pm2 + certbot. Runbook: docs/deploy.md.
 
 Added the claim-flow diagram (panel feedback item 1). README and slide
 versions live in docs/img/, drawn in the deck's ink-and-cherry style.
+
+## 2026-09-30 · Real demo sources
+
+Replaced the three placeholder sources in the source stage with real
+records. The demo claim's source card is now entirely true. Summary in
+policy.js rewritten as neutral description, no verdict.
+
+- Budget source upgraded: placeholder imagined an "FY2026 Adopted
+  Budget"; cited the audited FY2025 Annual Comprehensive Financial
+  Report instead, because audited actuals answer "where does the money
+  go" better than a plan. Excerpt is the MD&A general fund
+  expenditures table (Instruction $265.4M of $378.7M total).
+- Ballot language: actual March 19, 2024 Official Questions and Issues
+  Ballot from the Delaware County Board of Elections, permitted-uses
+  wording typed as filed.
+- Minutes: August 27, 2026 regular meeting via BoardDocs, showing the
+  board's recorded vote approving the financial forecast. Chosen over
+  hunting the 2023 ballot-placement minutes; current minutes showing
+  ongoing financial votes serve the demo better.
+- Citation rule addition: documents hosted on a district's website
+  vendor CDN (e.g. resources.finalsite.net) reached from the official
+  site are cited at the document's own URL; tier follows the
+  publisher, not the hosting domain, so these remain primary.
