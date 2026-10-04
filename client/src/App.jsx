@@ -60,7 +60,8 @@ export default function App() {
           Footnote<sup>1</sup>
         </h1>
         <p className="fn-tagline">
-          Bring a claim. See the records. Find the next step. Then it forgets you.
+          Bring a claim. See the records. Find the next step. Then it forgets
+          you.
         </p>
       </header>
 
@@ -117,7 +118,9 @@ export default function App() {
                 onChange={(e) => setPolicy(e.target.value)}
               >
                 <option value="STRICT">Strict (primary + official only)</option>
-                <option value="LIGHT">Light (adds established reporting)</option>
+                <option value="LIGHT">
+                  Light (adds established reporting)
+                </option>
               </select>
             </div>
           </div>
@@ -180,29 +183,76 @@ function Results({ result, onReset }) {
         {civicInvitation.covered ? (
           <>
             <h2 className="fn-locality">{civicInvitation.locality.name}</h2>
-            <InviteList title="Meetings" items={civicInvitation.meetings} render={(m) => (
-              <>
-                <strong>{m.body}</strong> · {m.schedule}
-                {m.agenda_portal && (
-                  <> · <a href={m.agenda_portal} target="_blank" rel="noreferrer">agendas</a></>
-                )}
-              </>
-            )} />
-            <InviteList title="Officials" items={civicInvitation.officials} render={(o) => (
-              <>
-                <strong>{o.name}</strong>, {o.role}
-                {o.contact && <> · {o.contact}</>}
-              </>
-            )} />
-            <InviteList title="Organizations already on it" items={civicInvitation.organizations} render={(g) => (
-              <>
-                <strong>{g.name}</strong>
-                {g.focus && <> · {g.focus}</>}
-                {g.url && (
-                  <> · <a href={g.url} target="_blank" rel="noreferrer">site</a></>
-                )}
-              </>
-            )} />
+            <InviteList
+              title="Meetings"
+              items={civicInvitation.meetings}
+              render={(m) => (
+                <>
+                  <strong>{m.body}</strong> · {m.schedule}
+                  {m.agenda_portal && (
+                    <>
+                      {" "}
+                      ·{" "}
+                      <a
+                        href={m.agenda_portal}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        agendas
+                      </a>
+                    </>
+                  )}
+                </>
+              )}
+            />
+            <InviteList
+              title="Officials"
+              items={civicInvitation.officials}
+              render={(o) => (
+                <>
+                  <strong>{o.name}</strong>, {o.role}
+                  {o.contact && <> · {o.contact}</>}
+                </>
+              )}
+            />
+            <InviteList
+              title="Organizations already on it"
+              items={civicInvitation.organizations}
+              render={(g) => (
+                <>
+                  <strong>{g.name}</strong>
+                  {g.focus && <> · {g.focus}</>}
+                  {g.url && (
+                    <>
+                      {" "}
+                      ·{" "}
+                      <a href={g.url} target="_blank" rel="noreferrer">
+                        site
+                      </a>
+                    </>
+                  )}
+                </>
+              )}
+            />
+            <InviteList
+              title="Resources"
+              items={civicInvitation.resources || []}
+              render={(r) => (
+                <>
+                  <strong>{r.name}</strong>
+                  {r.jurisdiction && <> · {r.jurisdiction}</>}
+                  {r.url && (
+                    <>
+                      {" "}
+                      ·{" "}
+                      <a href={r.url} target="_blank" rel="noreferrer">
+                        open
+                      </a>
+                    </>
+                  )}
+                </>
+              )}
+            />
           </>
         ) : (
           <p className="fn-summary">
@@ -256,7 +306,8 @@ function InviteList({ title, items, render }) {
               <a href={it.source_url} target="_blank" rel="noreferrer">
                 source
               </a>{" "}
-              · verified {it.verifiedDaysAgo} day{it.verifiedDaysAgo === 1 ? "" : "s"} ago · {it.tier}
+              · verified {it.verifiedDaysAgo} day
+              {it.verifiedDaysAgo === 1 ? "" : "s"} ago · {it.tier}
             </p>
           </li>
         ))}

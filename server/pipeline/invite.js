@@ -53,6 +53,7 @@ function invite(claim, classification, localityId, ctx) {
     officials: (locality.officials || []).map(withStaleness),
     meetings: (locality.meetings || []).map(withStaleness),
     organizations: (locality.organizations || []).map(withStaleness),
+    resources: (locality.resources || []).map(withStaleness),
   };
 
   ctx.transparency.push({
@@ -60,7 +61,7 @@ function invite(claim, classification, localityId, ctx) {
     at: new Date().toISOString(),
     method: "locality package (YAML, version-controlled)",
     aiInvolved: false,
-    note: `Loaded ${invitation.officials.length} officials, ${invitation.meetings.length} meetings, ${invitation.organizations.length} organizations for ${locality.locality.name}.`,
+    note: `Loaded ${invitation.officials.length} officials, ${invitation.meetings.length} meetings, ${invitation.organizations.length} organizations, ${invitation.resources.length} resources for ${locality.locality.name}.`,
   });
 
   return invitation;
