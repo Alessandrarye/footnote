@@ -66,3 +66,13 @@ policy.js rewritten as neutral description, no verdict.
   vendor CDN (e.g. resources.finalsite.net) reached from the official
   site are cited at the document's own URL; tier follows the
   publisher, not the hosting domain, so these remain primary.
+
+## 2026-10-04 · Resources shown as a fourth invitation group
+
+The `resources:` block in the locality YAML (public-records request, Ohio
+Revised Code, legal notices, meeting videos, county directories) now loads
+in invite.js and renders under Organizations. Resources get the same
+staleness and receipt treatment as officials, meetings, and organizations,
+so every item a user sees carries a source, a verified date, and a tier.
+The link label is "open" because these are tools to use, not sites to
+browse. The transparency note now counts resources too.
