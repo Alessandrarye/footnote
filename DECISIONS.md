@@ -76,3 +76,20 @@ staleness and receipt treatment as officials, meetings, and organizations,
 so every item a user sees carries a source, a verified date, and a tier.
 The link label is "open" because these are tools to use, not sites to
 browse. The transparency note now counts resources too.
+
+## 2026-10-04 · Model drafts the summary, code decides what appears
+
+The source card summary is now drafted by Claude Haiku through adapter.js,
+one or two sentences per kept source, each naming the source it came from.
+policy.js then checks every sentence with rules, not AI: it must point to a
+kept source, every figure must appear in that source, it must contain no
+verdict language, and outcome words (approved, passed, failed) may appear
+only if the cited record uses them. Failed sentences are dropped and logged
+in the transparency record. The closing "no verdict is offered" line is
+written by code. No key, a failed call, or zero surviving sentences falls
+back to the curated summary.
+
+The outcome rule came from the first test run: the model wrote that the levy
+was "approved" while citing the ballot, which lists the question but not the
+result. Known limit: the checker verifies attribution, figures, and wording,
+not whether a paraphrase preserves meaning.
