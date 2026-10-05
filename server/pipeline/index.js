@@ -1,7 +1,7 @@
 // The pipeline runner. Composes the four stages in order and returns one
 // result object. The transparency record is a side effect of the architecture:
 // every stage appends to ctx.transparency as it runs.
-// Async now: the classify stage may call the model through the adapter.
+// Async: the classify and policy stages may call the model through the adapter.
 
 const { classify } = require("./classify");
 const { gatherSources } = require("./source");
@@ -14,7 +14,7 @@ async function runClaim({ claim, localityId, policy = "STRICT" }) {
 
   const classification = await classify(claim, ctx);
   const sources = gatherSources(claim, classification, ctx);
-  const sourceCard = applyPolicy(claim, sources, policy, ctx);
+  const sourceCard = await applyPolicy(claim, sources, policy, ctx);
   const civicInvitation = invite(claim, classification, localityId, ctx);
 
   return {

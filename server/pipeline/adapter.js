@@ -40,7 +40,12 @@ async function callModel({ system, user, maxTokens = 300 }) {
     .map((b) => b.text)
     .join("");
 
-  return { text, model: MODEL, latencyMs: Date.now() - started, usage: data.usage };
+  return {
+    text,
+    model: MODEL,
+    latencyMs: Date.now() - started,
+    usage: data.usage,
+  };
 }
 
 // Strip markdown fences if the model wraps its JSON, then parse strictly.
@@ -98,4 +103,54 @@ async function classifyWithModel(claim) {
   };
 }
 
-module.exports = { hasModel, classifyWithModel };
+const SUMMARY_SYSTEM = `You draft source card summaries for a civic tool called Footnote.
+You are given a claim and a numbered list of source records, each with a title
+and an excerpt. Your only job is to say plainly what each record states. You
+never judge whether the claim is true.
+
+Respond with ONLY a JSON object, no prose, no markdown fences, exactly this
+shape:
+{
+  "sentences": [
+    { "text": one plain-language sentence, "source": the number of the single source it comes from }
+  ]
+}
+
+Rules:
+- Every source gets at least one sentence and at most two, in the order the
+  sources are given. Never skip a source, even if it seems less related.
+- Do not state an outcome (approved, passed, failed, rejected, adopted)
+  unless that source's excerpt states it. A ballot lists a question; it does
+  not say how the vote went.
+- Use only facts stated in that source's title or excerpt. Add nothing from
+  outside knowledge.
+- Copy every number exactly as written, including dollar signs and commas.
+- Each sentence draws on exactly one source.
+- Never say whether the claim is true, false, accurate, supported, or
+  misleading. No verdict, no advice, no judgment words.`;
+
+async function draftSummaryWithModel(claim, sources) {
+  const listing = sources
+    .map((s, i) => `[${i + 1}] ${s.title}\nExcerpt: ${s.excerpt}`)
+    .join("\n\n");
+
+  const { text, model, latencyMs } = await callModel({
+    system: SUMMARY_SYSTEM,
+    user: `Claim: ${claim}\n\nSources:\n${listing}`,
+    maxTokens: 700,
+  });
+  const parsed = parseJson(text);
+
+  // Validate the shape before anyone downstream trusts it.
+  if (!Array.isArray(parsed.sentences)) throw new Error("bad sentences");
+
+  return {
+    sentences: parsed.sentences.map((s) => ({
+      text: String(s.text || "").trim(),
+      source: Number(s.source),
+    })),
+    meta: { model, latencyMs },
+  };
+}
+
+module.exports = { hasModel, classifyWithModel, draftSummaryWithModel };
