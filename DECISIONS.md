@@ -126,3 +126,12 @@ polished interface. The interface changes, in one pass:
   cannot be reached. Every button and link has a visible keyboard focus ring.
 - Scaffold leftovers are gone: the page title was "client", the favicon was
   the Vite logo, and unused template assets were still in the repo.
+
+## 2026-10-07 · No database and no CI in the capstone build
+
+The August stack decision named PostgreSQL, and the plan included GitHub
+Actions CI. Neither was built. Sessions are not stored, by design, and the
+civic data lives in version-controlled YAML whose git history is the audit
+log, so a database would have held nothing. CI waits on a real test suite,
+which starts with turning the checker proof script into tests. Both moved to
+the roadmap, and the README and tech notes now say so plainly.
