@@ -141,6 +141,7 @@ export default function App() {
 function Results({ result, onReset }) {
   const { classification, sourceCard, civicInvitation, transparency } = result;
   const [showRecord, setShowRecord] = useState(false);
+  const hasRecords = sourceCard.sources.length > 0;
 
   return (
     <div className="fn-results">
@@ -159,7 +160,9 @@ function Results({ result, onReset }) {
       </section>
 
       <section className="fn-card">
-        <p className="fn-eyebrow">What the records say</p>
+        <p className="fn-eyebrow">
+          {hasRecords ? "What the records say" : "Not yet covered"}
+        </p>
         <p className="fn-summary">{sourceCard.summary}</p>
         <ul className="fn-sources">
           {sourceCard.sources.map((s) => (
@@ -174,7 +177,9 @@ function Results({ result, onReset }) {
           ))}
         </ul>
         <p className="fn-hint">
-          No verdict badge, by design. Policy: {sourceCard.policy}.
+          {hasRecords
+            ? `No verdict badge, by design. Policy: ${sourceCard.policy}.`
+            : "Your local next step below still applies."}
         </p>
       </section>
 

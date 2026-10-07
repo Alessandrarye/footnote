@@ -93,3 +93,18 @@ The outcome rule came from the first test run: the model wrote that the levy
 was "approved" while citing the ballot, which lists the question but not the
 result. Known limit: the checker verifies attribution, figures, and wording,
 not whether a paraphrase preserves meaning.
+
+## 2026-10-05 · Claims without records get an honest empty card
+
+source.js used to return the levy records for every claim, so an unrelated
+claim was shown records that did not answer it. Sources now live in record
+sets, each with a topic rule: a claim matches if it names the topic directly
+(levy, millage) or pairs a "who" word (school, district, Olentangy) with a
+"what" word (tax, budget, spending, money). The match is rules, not AI, and
+the transparency record logs which set matched and on which words.
+
+A claim that matches no set gets no sources, no model-drafted summary, and a
+card that says "Not yet covered" and names what Footnote does carry. The
+civic invitation still appears, because the local next step applies either
+way. Known limit: keyword matching is coarse, so a loosely related claim
+about school money will still be shown the levy records.
