@@ -108,3 +108,21 @@ card that says "Not yet covered" and names what Footnote does carry. The
 civic invitation still appears, because the local next step applies either
 way. Known limit: keyword matching is coarse, so a loosely related claim
 about school money will still be shown the levy records.
+
+## 2026-10-07 · Interface polish before the final demo
+
+Instructor feedback asked for a current README, a current server, and a
+polished interface. The interface changes, in one pass:
+
+- The civic invitation lists the entries closest to the claim first. A levy
+  claim now leads with the Olentangy school board instead of scrolling past
+  Powell City Council. Nothing is removed, the order inside each half is
+  unchanged, and a line under the locality name says why the order changed.
+- The transparency record shows the checker's work: how long each model call
+  took, how many summary sentences were drafted, kept, and dropped, and each
+  dropped sentence with its reason. Before this the data was logged but only
+  a one-line note was displayed.
+- A mixed claim shows its checkable part. The form says so when the server
+  cannot be reached. Every button and link has a visible keyboard focus ring.
+- Scaffold leftovers are gone: the page title was "client", the favicon was
+  the Vite logo, and unused template assets were still in the repo.

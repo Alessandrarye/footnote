@@ -53,6 +53,11 @@ body {
   margin: 1rem 0 0.35rem;
 }
 
+.fn-textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
 .fn-textarea,
 .fn-select {
   width: 100%;
@@ -108,6 +113,7 @@ body {
   border-radius: 6px;
   cursor: pointer;
 }
+.fn-button:hover:not(:disabled) { background: #2b3a5e; }
 .fn-button:disabled { opacity: 0.5; cursor: default; }
 .fn-secondary {
   background: var(--paper);
@@ -115,7 +121,25 @@ body {
   border: 1px solid var(--ink);
 }
 
-.fn-error { color: var(--cherry); }
+.fn-secondary:hover:not(:disabled) { background: var(--tint); }
+
+/* One visible focus ring for everything that can be tabbed to. */
+.fn-button:focus-visible,
+.fn-link:focus-visible,
+.fn a:focus-visible {
+  outline: 2px solid var(--cherry);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.fn-error {
+  margin: 1rem 0 0;
+  padding: 0.7rem 0.9rem;
+  color: var(--cherry);
+  background: #fbeff0;
+  border: 1px solid #e5b9be;
+  border-radius: 6px;
+}
 
 .fn-results { display: grid; gap: 1rem; }
 
@@ -142,6 +166,7 @@ body {
 }
 
 .fn-class, .fn-summary { margin: 0; }
+.fn-embedded { margin-top: 0.4rem; }
 
 .fn-sources { list-style: none; padding: 0; margin: 1rem 0 0.5rem; }
 .fn-source {
@@ -173,6 +198,7 @@ body {
   color: var(--ink);
   font-size: 1.4rem;
 }
+.fn-ordered { margin: -0.4rem 0 0.75rem; }
 .fn-invite-group h3 {
   margin: 0.9rem 0 0.35rem;
   font-size: 0.95rem;
@@ -186,3 +212,19 @@ body {
 .fn-stages { margin: 0.75rem 0 0; padding-left: 1.2rem; }
 .fn-stages li { margin-bottom: 0.5rem; }
 .fn-stage-note { color: var(--muted); font-size: 0.9rem; }
+.fn-stage-details {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.fn-stage-details ul { margin: 0.25rem 0; padding-left: 1.1rem; }
+.fn-stage-details li { margin-bottom: 0.2rem; }
+
+.fn-footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.fn-footer a { color: var(--muted); }

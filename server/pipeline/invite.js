@@ -5,6 +5,7 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
+const { findRecordSet } = require("./source");
 
 const DATA_DIR = path.join(__dirname, "..", "..", "data", "localities");
 
@@ -33,6 +34,17 @@ function withStaleness(entry) {
   return { ...entry, verifiedDaysAgo: daysSince(entry.verified) };
 }
 
+// Moves the entries closest to the claim to the front of a group. An entry
+// is "closest" when its name, body, role, or jurisdiction matches the record
+// set the claim belongs to. Nothing is removed, and the order inside each
+// half stays exactly as it is in the locality file.
+function closestFirst(entries, pattern) {
+  if (!pattern) return entries;
+  const isClose = (e) =>
+    pattern.test([e.name, e.body, e.role, e.jurisdiction].join(" "));
+  return [...entries.filter(isClose), ...entries.filter((e) => !isClose(e))];
+}
+
 function invite(claim, classification, localityId, ctx) {
   const locality = loadLocality(localityId);
 
@@ -47,13 +59,21 @@ function invite(claim, classification, localityId, ctx) {
     return { covered: false, localityId };
   }
 
+  const match = findRecordSet(claim);
+  const pattern = match ? match.set.relevant : null;
+  const group = (entries) =>
+    closestFirst((entries || []).map(withStaleness), pattern);
+
   const invitation = {
     covered: true,
     locality: locality.locality,
-    officials: (locality.officials || []).map(withStaleness),
-    meetings: (locality.meetings || []).map(withStaleness),
-    organizations: (locality.organizations || []).map(withStaleness),
-    resources: (locality.resources || []).map(withStaleness),
+    // Set when the claim matched a record set: the UI says why the order
+    // changed. Null means the locality file's own order.
+    orderedFor: match ? match.set.relevantName : null,
+    officials: group(locality.officials),
+    meetings: group(locality.meetings),
+    organizations: group(locality.organizations),
+    resources: group(locality.resources),
   };
 
   ctx.transparency.push({
@@ -61,7 +81,7 @@ function invite(claim, classification, localityId, ctx) {
     at: new Date().toISOString(),
     method: "locality package (YAML, version-controlled)",
     aiInvolved: false,
-    note: `Loaded ${invitation.officials.length} officials, ${invitation.meetings.length} meetings, ${invitation.organizations.length} organizations, ${invitation.resources.length} resources for ${locality.locality.name}.`,
+    note: `Loaded ${invitation.officials.length} officials, ${invitation.meetings.length} meetings, ${invitation.organizations.length} organizations, ${invitation.resources.length} resources for ${locality.locality.name}.${invitation.orderedFor ? ` ${invitation.orderedFor} entries listed first.` : ""}`,
   });
 
   return invitation;

@@ -19,6 +19,9 @@ const RECORD_SETS = [
     who: /\b(schools?|district|olentangy|board of education)\b/i,
     what: /\b(tax|taxes|budget|spend|spends|spending|spent|money|funds?|funding)\b/i,
     searched: ["district budget", "board of elections", "board minutes"],
+    // Used by the invite stage to list the closest entries first.
+    relevantName: "Olentangy Local School District",
+    relevant: /olentangy/i,
     sources: [
       {
         title:

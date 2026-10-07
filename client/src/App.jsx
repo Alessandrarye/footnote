@@ -2,30 +2,32 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 const SAMPLE_CLAIM = "The new levy money is going to administrator raises";
+const REPO_URL = "https://github.com/Alessandrarye/footnote";
 
+// Loads the covered localities once. `failed` is true when the server could
+// not be reached, so the form can say so instead of showing an empty list.
 function useLocalities() {
-  const [localities, setLocalities] = useState([]);
+  const [state, setState] = useState({ localities: [], failed: false });
   useEffect(() => {
     fetch("/api/localities")
       .then((r) => r.json())
-      .then((d) => setLocalities(d.localities || []))
-      .catch(() => setLocalities([]));
+      .then((d) => setState({ localities: d.localities || [], failed: false }))
+      .catch(() => setState({ localities: [], failed: true }));
   }, []);
-  return localities;
+  return state;
 }
 
 export default function App() {
-  const localities = useLocalities();
+  const { localities, failed } = useLocalities();
   const [claim, setClaim] = useState("");
-  const [localityId, setLocalityId] = useState("");
+  const [chosenLocality, setChosenLocality] = useState("");
   const [policy, setPolicy] = useState("STRICT");
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
-  useEffect(() => {
-    if (!localityId && localities.length) setLocalityId(localities[0].id);
-  }, [localities, localityId]);
+  // Until the reader picks a place, the first covered locality is selected.
+  const localityId = chosenLocality || localities[0]?.id || "";
 
   async function submit(e) {
     e.preventDefault();
@@ -95,7 +97,7 @@ export default function App() {
                 id="locality"
                 className="fn-select"
                 value={localityId}
-                onChange={(e) => setLocalityId(e.target.value)}
+                onChange={(e) => setChosenLocality(e.target.value)}
               >
                 {localities.map((l) => (
                   <option key={l.id} value={l.id}>
@@ -125,15 +127,35 @@ export default function App() {
             </div>
           </div>
 
-          {error && <p className="fn-error">{error}</p>}
+          {failed && (
+            <p className="fn-error" role="alert">
+              Footnote cannot reach its server right now. Please try again in a
+              moment.
+            </p>
+          )}
+          {error && (
+            <p className="fn-error" role="alert">
+              {error}
+            </p>
+          )}
 
-          <button className="fn-button" disabled={busy || !claim.trim()}>
+          <button
+            className="fn-button"
+            disabled={busy || !claim.trim() || !localityId}
+          >
             {busy ? "Looking at the records..." : "Look at the records"}
           </button>
         </form>
       ) : (
         <Results result={result} onReset={reset} />
       )}
+
+      <footer className="fn-footer">
+        No profiles, no tracking, no ads. Nothing you type here is saved.{" "}
+        <a href={REPO_URL} target="_blank" rel="noreferrer">
+          Source code and decisions log
+        </a>
+      </footer>
     </div>
   );
 }
@@ -157,6 +179,12 @@ function Results({ result, onReset }) {
               : "mixed statement with a checkable claim inside it"}
           {classification.subject ? `, about ${classification.subject}` : ""}.
         </p>
+        {classification.embeddedFactualClaim && (
+          <p className="fn-class fn-embedded">
+            <strong>The checkable part:</strong>{" "}
+            {classification.embeddedFactualClaim}
+          </p>
+        )}
       </section>
 
       <section className="fn-card">
@@ -164,18 +192,20 @@ function Results({ result, onReset }) {
           {hasRecords ? "What the records say" : "Not yet covered"}
         </p>
         <p className="fn-summary">{sourceCard.summary}</p>
-        <ul className="fn-sources">
-          {sourceCard.sources.map((s) => (
-            <li key={s.url} className="fn-source">
-              <a href={s.url} target="_blank" rel="noreferrer">
-                {s.title}
-              </a>
-              <span className="fn-tier">{s.tier}</span>
-              <p className="fn-excerpt">{s.excerpt}</p>
-              <p className="fn-receipt">Verified {s.verified}</p>
-            </li>
-          ))}
-        </ul>
+        {hasRecords && (
+          <ul className="fn-sources">
+            {sourceCard.sources.map((s) => (
+              <li key={s.url} className="fn-source">
+                <a href={s.url} target="_blank" rel="noreferrer">
+                  {s.title}
+                </a>
+                <span className="fn-tier">{s.tier}</span>
+                <p className="fn-excerpt">{s.excerpt}</p>
+                <p className="fn-receipt">Verified {s.verified}</p>
+              </li>
+            ))}
+          </ul>
+        )}
         <p className="fn-hint">
           {hasRecords
             ? `No verdict badge, by design. Policy: ${sourceCard.policy}.`
@@ -188,6 +218,12 @@ function Results({ result, onReset }) {
         {civicInvitation.covered ? (
           <>
             <h2 className="fn-locality">{civicInvitation.locality.name}</h2>
+            {civicInvitation.orderedFor && (
+              <p className="fn-hint fn-ordered">
+                {civicInvitation.orderedFor} is listed first in each group,
+                because this claim is about it.
+              </p>
+            )}
             <InviteList
               title="Meetings"
               items={civicInvitation.meetings}
@@ -285,6 +321,7 @@ function Results({ result, onReset }) {
                 <strong>{s.stage}</strong> · {s.method} · AI:{" "}
                 {s.aiInvolved ? "yes" : "no"}
                 <div className="fn-stage-note">{s.note}</div>
+                <StageDetails stage={s} />
               </li>
             ))}
           </ol>
@@ -294,6 +331,42 @@ function Results({ result, onReset }) {
       <button className="fn-button fn-secondary" onClick={onReset}>
         Bring another claim (this session is not saved)
       </button>
+    </div>
+  );
+}
+
+// The extra facts a stage logged, shown under its one-line note: how long a
+// model call took, and for the policy stage, how many drafted sentences the
+// checker kept and exactly which ones it dropped, with the reason for each.
+function StageDetails({ stage }) {
+  const facts = [];
+  if (typeof stage.latencyMs === "number") {
+    facts.push(`Model call took ${(stage.latencyMs / 1000).toFixed(1)} s`);
+  }
+  if (typeof stage.summaryDrafted === "number") {
+    facts.push(
+      `${stage.summaryDrafted} sentences drafted, ${stage.summaryKept} kept, ${stage.summaryDropped.length} dropped`,
+    );
+  }
+  const dropped = stage.summaryDropped || [];
+  const uncovered = stage.summaryUncovered || [];
+  if (!facts.length && !dropped.length && !uncovered.length) return null;
+
+  return (
+    <div className="fn-stage-details">
+      {facts.length > 0 && <div>{facts.join(" · ")}</div>}
+      {dropped.length > 0 && (
+        <ul>
+          {dropped.map((d, i) => (
+            <li key={i}>
+              Dropped: "{d.text}" <em>Reason: {d.reason}.</em>
+            </li>
+          ))}
+        </ul>
+      )}
+      {uncovered.length > 0 && (
+        <div>Sources with no surviving sentence: {uncovered.join("; ")}</div>
+      )}
     </div>
   );
 }
