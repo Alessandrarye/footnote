@@ -5,6 +5,12 @@ is, why it was chosen, how it works in Footnote specifically, and the
 questions each piece tends to attract, with answers. Read it twice and you'll
 be able to go as deep as any questioner wants to go.
 
+> **Status note, 2026-10-07.** This was written in August as the plan. Two
+> parts of it were not built for the capstone: the PostgreSQL store (section
+> 3) and GitHub Actions CI (section 7). Sessions are not stored, so there is
+> nothing for a database to hold yet. Both are on the roadmap. The README
+> lists what is running today.
+
 ---
 
 ## 1. Frontend: React with Vite
