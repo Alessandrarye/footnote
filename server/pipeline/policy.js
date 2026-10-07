@@ -8,8 +8,12 @@
 // sentences, each naming the one kept source it came from. The code below
 // decides which sentences reach the page. No model, a failed call, or zero
 // surviving sentences all fall back to the curated summary.
+//
+// A claim with no kept sources gets neither: the card says plainly that
+// Footnote has no records for it yet, and the model is never called.
 
 const { hasModel, draftSummaryWithModel } = require("./adapter");
+const { coveredTopics } = require("./source");
 
 const POLICY_TIERS = {
   STRICT: ["primary", "official-communication"],
@@ -19,6 +23,12 @@ const POLICY_TIERS = {
 // Curated: hand-written fallback. Every sentence maps to a kept source.
 const CURATED_SUMMARY =
   "The March 2024 ballot authorized Olentangy Local School District to levy taxes for stated purposes, including current operating expenses and permanent improvements. The district's audited FY2025 Annual Comprehensive Financial Report states actual expenditures by function. Board of Education meeting minutes record the board's votes on district finances, including approval of the financial forecast. The records describe permitted purposes and reported spending; no verdict is offered.";
+
+// Shown when no source survives for a claim. Written by code, and it names
+// what Footnote does carry so the reader knows where the edge is.
+function notCoveredSummary() {
+  return `Footnote has no records for this claim yet. Right now it carries records for ${coveredTopics().join("; ")}. No records are shown here, because records that do not answer your claim would be worse than none.`;
+}
 
 // Written by code, never by the model: it maps to no single source.
 const CLOSING_LINE =
@@ -71,8 +81,17 @@ async function buildSummary(claim, kept) {
     record: { aiInvolved: false, summaryMethod: `curated (${why})`, ...extra },
   });
 
+  if (kept.length === 0) {
+    return {
+      summary: notCoveredSummary(),
+      summarySentences: [],
+      record: {
+        aiInvolved: false,
+        summaryMethod: "none (no records for this claim)",
+      },
+    };
+  }
   if (!hasModel()) return curated("no model available");
-  if (kept.length === 0) return curated("no kept sources");
 
   let draft;
   try {
@@ -129,6 +148,8 @@ async function applyPolicy(claim, sources, policy, ctx) {
     // Each entry: { text, source } where source is the 1-based position in
     // `sources` below. Empty when the curated summary is used.
     summarySentences: built.summarySentences,
+    // False when no source survived: the UI shows the "not yet covered" card.
+    covered: kept.length > 0,
     sources: kept,
     verdictBadge: null, // by design, always null
   };
